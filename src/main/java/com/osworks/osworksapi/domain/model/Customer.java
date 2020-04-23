@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Cliente {
+public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)     // Estratégia de geração da forma nativo do bd, no caso do mysql, auto_increment
@@ -64,7 +64,7 @@ public class Cliente {
             return false;
         if(getClass() != obj.getClass())
             return false;
-        Cliente other = (Cliente) obj;
+        Customer other = (Customer) obj;
         if(id == null) {
             if(other.id != null)
                 return false;
