@@ -3,6 +3,8 @@ package com.osworks.osworksapi.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import com.osworks.osworksapi.domain.model.Customer;
 import com.osworks.osworksapi.domain.repository.CustomerRepository;
 
@@ -45,14 +47,14 @@ public class CustomerController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Customer create(@RequestBody Customer customer) {
+    public Customer create(@Valid @RequestBody Customer customer) {
         
         return customerRepository.save(customer);
     }
     
 
     @PutMapping("/{customerId}")
-    public ResponseEntity<Customer> update(@PathVariable Long customerId, @RequestBody Customer customer) {
+    public ResponseEntity<Customer> update(@PathVariable Long customerId, @Valid @RequestBody Customer customer) {
         if(!customerRepository.existsById(customerId)){
             return ResponseEntity.notFound().build();
         }
