@@ -1,4 +1,4 @@
-package com.osworks.osworksapi.controller;
+package com.osworks.osworksapi.api.controller;
 
 import java.util.List;
 import java.util.Optional;
