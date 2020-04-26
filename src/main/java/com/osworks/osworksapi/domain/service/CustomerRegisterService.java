@@ -17,7 +17,7 @@ public class CustomerRegisterService {
         Customer customerExist = customerRepository.findByEmail(customer.getEmail());
 
         if(customerExist!=null && !customerExist.equals(customer)) {
-            throw new ServiceException("E-mail já existente.");
+            throw new ServiceException("E-mail já cadastrado.");
         }
 
         return customerRepository.save(customer);
