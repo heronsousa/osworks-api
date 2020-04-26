@@ -1,5 +1,6 @@
 package com.osworks.osworksapi.domain.service;
 
+import com.osworks.osworksapi.domain.exception.ServiceException;
 import com.osworks.osworksapi.domain.model.Customer;
 import com.osworks.osworksapi.domain.repository.CustomerRepository;
 
@@ -13,6 +14,12 @@ public class CustomerRegisterService {
     private CustomerRepository customerRepository;
 
     public Customer save(Customer customer) {
+        Customer customerExist = customerRepository.findByEmail(customer.getEmail());
+
+        if(customerExist!=null && !customerExist.equals(customer)) {
+            throw new ServiceException("E-mail já existente.");
+        }
+
         return customerRepository.save(customer);
     }     
 

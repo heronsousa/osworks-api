@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import com.osworks.osworksapi.domain.model.Customer;
 import com.osworks.osworksapi.domain.repository.CustomerRepository;
+import com.osworks.osworksapi.domain.service.CustomerRegisterService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,9 @@ public class CustomerController {
     @Autowired
     private CustomerRepository customerRepository;
 
+    @Autowired
+    private CustomerRegisterService customerRegister;
+
     @GetMapping
     public List<Customer> list() {
         return customerRepository.findAll();
@@ -49,7 +53,7 @@ public class CustomerController {
     @ResponseStatus(HttpStatus.CREATED)
     public Customer create(@Valid @RequestBody Customer customer) {
         
-        return customerRepository.save(customer);
+        return customerRegister.save(customer);
     }
     
 
@@ -60,7 +64,7 @@ public class CustomerController {
         }
         
         customer.setId(customerId);
-        customerRepository.save(customer);
+        customerRegister.save(customer);
 
         return ResponseEntity.ok(customer);
     }
@@ -71,7 +75,7 @@ public class CustomerController {
             return ResponseEntity.notFound().build();
         }
 
-        customerRepository.deleteById(customerId);
+        customerRegister.delete(customerId);
 
         return ResponseEntity.ok().build();
     }

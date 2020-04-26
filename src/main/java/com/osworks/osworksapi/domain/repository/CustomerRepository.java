@@ -11,4 +11,5 @@ import com.osworks.osworksapi.domain.model.Customer;
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
     
     List<Customer> findByNameContaining(String name);
+    Customer findByEmail(String email);
 }
