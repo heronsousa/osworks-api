@@ -5,7 +5,7 @@ CREATE TABLE service_order (
     price decimal(10,2) not null,
     status varchar(20) not null,
     opening_date datetime not null,
-    closing_date datetime not null,
+    closing_date datetime,
     
     primary key (id)
 );
