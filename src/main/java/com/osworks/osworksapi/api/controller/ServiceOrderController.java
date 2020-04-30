@@ -1,7 +1,6 @@
 package com.osworks.osworksapi.api.controller;
 
 import com.osworks.osworksapi.domain.model.ServiceOrder;
-import com.osworks.osworksapi.domain.repository.ServiceOrderRepository;
 import com.osworks.osworksapi.domain.service.ServiceOrderManagementService;
 
 import org.springframework.beans.factory.annotation.Autowired;
