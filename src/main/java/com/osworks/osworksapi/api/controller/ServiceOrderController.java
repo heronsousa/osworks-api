@@ -1,5 +1,7 @@
 package com.osworks.osworksapi.api.controller;
 
+import javax.validation.Valid;
+
 import com.osworks.osworksapi.domain.model.ServiceOrder;
 import com.osworks.osworksapi.domain.service.ServiceOrderManagementService;
 
@@ -20,7 +22,7 @@ public class ServiceOrderController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    private ServiceOrder create(@RequestBody ServiceOrder serviceOrder) {
+    private ServiceOrder create(@Valid @RequestBody ServiceOrder serviceOrder) {
         return serviceOrderManagement.create(serviceOrder);
     }
 }
