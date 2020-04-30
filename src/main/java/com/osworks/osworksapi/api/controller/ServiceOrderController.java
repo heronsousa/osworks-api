@@ -2,13 +2,16 @@ package com.osworks.osworksapi.api.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import com.osworks.osworksapi.api.model.ServiceOrderModel;
 import com.osworks.osworksapi.domain.model.ServiceOrder;
 import com.osworks.osworksapi.domain.repository.ServiceOrderRepository;
 import com.osworks.osworksapi.domain.service.ServiceOrderManagementService;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,25 +33,39 @@ public class ServiceOrderController {
     @Autowired
     private ServiceOrderRepository serviceOrderRepository;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    private ServiceOrder create(@Valid @RequestBody ServiceOrder serviceOrder) {
-        return serviceOrderManagement.create(serviceOrder);
+    private ServiceOrderModel create(@Valid @RequestBody ServiceOrder serviceOrder) {
+        return toModel(serviceOrderManagement.create(serviceOrder));
     }
 
     @GetMapping
-    private List<ServiceOrder> show() {
-        return serviceOrderRepository.findAll();
+    private List<ServiceOrderModel> show() {
+        return toCollectionModel(serviceOrderRepository.findAll());
     }
 
     @GetMapping("/{serviceOrderId}")
-    private ResponseEntity<ServiceOrder> search(@PathVariable Long serviceOrderId) {
+    private ResponseEntity<ServiceOrderModel> search(@PathVariable Long serviceOrderId) {
         Optional<ServiceOrder> serviceOrder = serviceOrderRepository.findById(serviceOrderId);
 
         if(serviceOrder.isPresent()) {
-            return ResponseEntity.ok(serviceOrder.get());
+            ServiceOrderModel serviceOrderModel = toModel(serviceOrder.get());
+            return ResponseEntity.ok(serviceOrderModel);
         }
 
         return ResponseEntity.notFound().build();
+    }
+
+    private ServiceOrderModel toModel(ServiceOrder serviceOrder) {
+        return  modelMapper.map(serviceOrder, ServiceOrderModel.class);
+    }
+
+    private List<ServiceOrderModel> toCollectionModel(List<ServiceOrder> serviceOrders) {
+        return serviceOrders.stream()
+                        .map(serviceOrder -> toModel(serviceOrder))
+                        .collect(Collectors.toList());
     }
 }

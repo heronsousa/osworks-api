@@ -1,6 +1,6 @@
 package com.osworks.osworksapi.api.exceptionhandler;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 
 import com.osworks.osworksapi.api.exceptionhandler.Error;
@@ -33,7 +33,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         Error error = new Error();
         error.setStatus(status.value());
         error.setTitle(ex.getMessage());
-        error.setDateTime(LocalDateTime.now());
+        error.setDateTime(OffsetDateTime.now());
 
         return handleExceptionInternal(ex, error, new HttpHeaders(), status, request);
     }
@@ -54,7 +54,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         Error error = new Error();
         error.setStatus(status.value());
         error.setTitle("Um ou mais campos estão inválidos. Tente novamente.");
-        error.setDateTime(LocalDateTime.now());
+        error.setDateTime(OffsetDateTime.now());
         error.setInputs(inputs);
 
         return super.handleExceptionInternal(ex, error, headers, status, request);

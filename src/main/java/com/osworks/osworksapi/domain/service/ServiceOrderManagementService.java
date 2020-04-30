@@ -1,6 +1,6 @@
 package com.osworks.osworksapi.domain.service;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 import com.osworks.osworksapi.domain.exception.ServiceException;
 import com.osworks.osworksapi.domain.model.Customer;
@@ -27,7 +27,7 @@ public class ServiceOrderManagementService {
 
         serviceOrder.setCustomer(customer);
         serviceOrder.setStatus(ServiceOrderStatus.ABERTA);
-        serviceOrder.setOpeningDate(LocalDateTime.now());
+        serviceOrder.setOpeningDate(OffsetDateTime.now());
 
         return serviceOrderRepository.save(serviceOrder);
     }
