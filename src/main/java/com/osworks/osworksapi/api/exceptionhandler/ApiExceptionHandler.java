@@ -3,7 +3,6 @@ package com.osworks.osworksapi.api.exceptionhandler;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 
-import com.osworks.osworksapi.api.exceptionhandler.Error;
 import com.osworks.osworksapi.domain.exception.ServiceException;
 
 import org.springframework.beans.factory.annotation.Autowired;

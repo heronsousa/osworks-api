@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import com.osworks.osworksapi.api.model.ServiceOrderInput;
 import com.osworks.osworksapi.api.model.ServiceOrderModel;
 import com.osworks.osworksapi.domain.model.ServiceOrder;
 import com.osworks.osworksapi.domain.repository.ServiceOrderRepository;
@@ -38,7 +39,9 @@ public class ServiceOrderController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    private ServiceOrderModel create(@Valid @RequestBody ServiceOrder serviceOrder) {
+    private ServiceOrderModel create(@Valid @RequestBody ServiceOrderInput serviceOrderInput) {
+        ServiceOrder serviceOrder = toEntity(serviceOrderInput);
+        
         return toModel(serviceOrderManagement.create(serviceOrder));
     }
 
@@ -67,5 +70,9 @@ public class ServiceOrderController {
         return serviceOrders.stream()
                         .map(serviceOrder -> toModel(serviceOrder))
                         .collect(Collectors.toList());
+    }
+
+    private ServiceOrder toEntity(ServiceOrderInput serviceOrderInput) {
+        return modelMapper.map(serviceOrderInput, ServiceOrder.class);
     }
 }
