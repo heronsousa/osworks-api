@@ -14,7 +14,7 @@ public class ServiceOrderInput {
     @NotNull
     private BigDecimal price;
     
-    @Valid
+    @Valid      // Valida as propriedades da instancia
     @NotNull
     private CustomerIdInput customer;
 

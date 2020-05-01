@@ -10,15 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.groups.ConvertGroup;
-import javax.validation.groups.Default;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
-import com.osworks.osworksapi.domain.ValidationGroups;
 
 @Entity
 public class ServiceOrder {
@@ -27,26 +18,16 @@ public class ServiceOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Valid      // Valida as propriedades da instancia
-    @ConvertGroup(from = Default.class, to = ValidationGroups.CustomerId.class)     // Ao validar a instancia customer, vai validar apenas as propriedades q possuirem a anotação ValidationGroups.CustomerId
-    @NotNull    // Verifica se possui a instancia customer
     @ManyToOne
     private Customer customer;
-    
-    @NotBlank
+
     private String description;
-    
-    @NotNull
     private BigDecimal price;
 
-    @JsonProperty(access = Access.READ_ONLY)
     @Enumerated(EnumType.STRING)
     private ServiceOrderStatus status;
-    
-    @JsonProperty(access = Access.READ_ONLY)
+
     private OffsetDateTime openingDate;
-    
-    @JsonProperty(access = Access.READ_ONLY)
     private OffsetDateTime closingDate;
 
     public Long getId() {

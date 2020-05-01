@@ -6,15 +6,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import com.osworks.osworksapi.domain.ValidationGroups;
 
 @Entity
 public class Customer {
 
-    @NotNull(groups = ValidationGroups.CustomerId.class)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)     // Estratégia de geração da forma nativo do bd, no caso do mysql, auto_increment
     private Long id;
