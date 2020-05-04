@@ -2,6 +2,7 @@ package com.osworks.osworksapi.domain.service;
 
 import java.time.OffsetDateTime;
 
+import com.osworks.osworksapi.domain.exception.EntityNotFoundException;
 import com.osworks.osworksapi.domain.exception.ServiceException;
 import com.osworks.osworksapi.domain.model.Comment;
 import com.osworks.osworksapi.domain.model.Customer;
@@ -40,7 +41,7 @@ public class ServiceOrderManagementService {
     public Comment addComment(Long serviceOrderId, String description) {
 
         ServiceOrder serviceOrder = serviceOrderRepository.findById(serviceOrderId)
-                            .orElseThrow(() -> new ServiceException("Ordem de serviçop não encontrada."));
+                            .orElseThrow(() -> new EntityNotFoundException("Ordem de serviço não encontrada."));
 
         Comment comment = new Comment();
         comment.setDescription(description);

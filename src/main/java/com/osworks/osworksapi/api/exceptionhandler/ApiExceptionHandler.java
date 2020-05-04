@@ -3,6 +3,7 @@ package com.osworks.osworksapi.api.exceptionhandler;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 
+import com.osworks.osworksapi.domain.exception.EntityNotFoundException;
 import com.osworks.osworksapi.domain.exception.ServiceException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,18 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Autowired
     private MessageSource messageSource;
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<Object> handleEntityNotFound(ServiceException ex, WebRequest request) {
+        HttpStatus status = HttpStatus.NOT_FOUND;
+
+        Error error = new Error();
+        error.setStatus(status.value());
+        error.setTitle(ex.getMessage());
+        error.setDateTime(OffsetDateTime.now());
+
+        return handleExceptionInternal(ex, error, new HttpHeaders(), status, request);
+    }
 
     @ExceptionHandler(ServiceException.class)
     public ResponseEntity<Object> handleService(ServiceException ex, WebRequest request) {
