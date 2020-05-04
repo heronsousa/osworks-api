@@ -8,11 +8,11 @@ public class CommentModel {
     private String description;
     private OffsetDateTime sendDate;
 
-    public Object getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(Object id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
