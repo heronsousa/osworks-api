@@ -69,6 +69,12 @@ public class ServiceOrderController {
         serviceOrderManagement.finish(serviceOrderId);
     }
 
+    @PutMapping("/{serviceOrderId}/cancel")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void cancel(@PathVariable long serviceOrderId) {
+        serviceOrderManagement.cancel(serviceOrderId);
+    }
+
     private ServiceOrderModel toModel(ServiceOrder serviceOrder) {
         return  modelMapper.map(serviceOrder, ServiceOrderModel.class);
     }

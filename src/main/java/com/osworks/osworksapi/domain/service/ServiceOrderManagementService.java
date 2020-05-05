@@ -44,9 +44,21 @@ public class ServiceOrderManagementService {
         if(!ServiceOrderStatus.ABERTA.equals(serviceOrder.getStatus())) {
             throw new ServiceException("Ordem de serviço não pode ser finalizada.");
         }
-        
+
         serviceOrder.setStatus(ServiceOrderStatus.FINALIZADA);
         serviceOrder.setClosingDate(OffsetDateTime.now());
+
+        serviceOrderRepository.save(serviceOrder);
+    }
+
+    public void cancel(Long serviceOrderId) {
+        ServiceOrder serviceOrder = search(serviceOrderId);
+
+        if(!ServiceOrderStatus.ABERTA.equals(serviceOrder.getStatus())) {
+            throw new ServiceException("Ordem de serviço não pode ser cancelada.");
+        }
+        
+        serviceOrder.setStatus(ServiceOrderStatus.CANCELADA);
 
         serviceOrderRepository.save(serviceOrder);
     }
