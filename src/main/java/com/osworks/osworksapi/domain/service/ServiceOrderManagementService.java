@@ -38,10 +38,22 @@ public class ServiceOrderManagementService {
         return serviceOrderRepository.save(serviceOrder);
     }
 
+    public void finish(Long serviceOrderId) {
+        ServiceOrder serviceOrder = search(serviceOrderId);
+
+        if(!ServiceOrderStatus.ABERTA.equals(serviceOrder.getStatus())) {
+            throw new ServiceException("Ordem de serviço não pode ser finalizada.");
+        }
+        
+        serviceOrder.setStatus(ServiceOrderStatus.FINALIZADA);
+        serviceOrder.setClosingDate(OffsetDateTime.now());
+
+        serviceOrderRepository.save(serviceOrder);
+    }
+
     public Comment addComment(Long serviceOrderId, String description) {
 
-        ServiceOrder serviceOrder = serviceOrderRepository.findById(serviceOrderId)
-                            .orElseThrow(() -> new EntityNotFoundException("Ordem de serviço não encontrada."));
+        ServiceOrder serviceOrder = search(serviceOrderId);
 
         Comment comment = new Comment();
         comment.setDescription(description);
@@ -49,5 +61,10 @@ public class ServiceOrderManagementService {
         comment.setServiceOrder(serviceOrder);
 
         return commentRepository.save(comment);
+    }
+
+    private ServiceOrder search(Long serviceOrderId) {
+        return serviceOrderRepository.findById(serviceOrderId)
+                .orElseThrow(() -> new EntityNotFoundException("Ordem de serviço não encontrada."));
     }
 }
